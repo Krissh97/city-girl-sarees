@@ -13,7 +13,7 @@ export default function Header() {
         <Link to="/" className="header-logo">
           <span className="logo-city">City</span> Girl
         </Link>
-        <div className="header-tagline">Handcrafted Elegance</div>
+        <div className="header-tagline">Elegance woven into Tradition</div>
       </div>
       <div className="header-right">
         <Link to="/cart" className="cart-btn">
