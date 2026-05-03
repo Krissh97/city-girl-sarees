@@ -6,7 +6,7 @@
 .hero p { color: #7A6247; margin-top: 1rem; font-size: 15px; letter-spacing: 0.05em; position: relative; }
 .hero-cta { margin-top: 2rem; display: inline-block; background: #C9923A; color: #1A0F00; padding: 14px 40px; border-radius: 4px; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; font-weight: 500; border: none; transition: opacity 0.2s; position: relative; font-family: 'DM Sans', sans-serif; }
 .hero-cta:hover { opacity: 0.9; }
-.features-strip { display: grid; grid-template-columns: repeat(4, 1fr); background: #FBF5E9; border-top: 1px solid #E8D9C0; border-bottom: 1px solid #E8D9C0; }
+.features-strip { display: grid; grid-template-columns: repeat(2, 1fr); background: #FBF5E9; border-top: 1px solid #E8D9C0; border-bottom: 1px solid #E8D9C0; }
 .feature-item { padding: 1.5rem; text-align: center; border-right: 1px solid #E8D9C0; }
 .feature-item:last-child { border-right: none; }
 .feature-icon { font-size: 1.5rem; margin-bottom: 8px; }
