@@ -8,9 +8,9 @@ import "../styles/Home.css";
 
 const FEATURES = [
   { icon: "🧵", title: "Handwoven", sub: "Artisan crafted" },
-  { icon: "📦", title: "Free Shipping", sub: "Orders above ₹1999" },
+  // { icon: "📦", title: "Free Shipping", sub: "Orders above ₹1999" },
   { icon: "✨", title: "Pure Fabrics", sub: "Quality guaranteed" },
-  { icon: "🔄", title: "Easy Returns", sub: "7-day policy" },
+  // { icon: "🔄", title: "Easy Returns", sub: "7-day policy" },
 ];
 
 export default function Home() {
