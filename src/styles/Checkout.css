@@ -1,0 +1,17 @@
+.checkout-form { background: #fff; border: 1px solid #E8D9C0; border-radius: 10px; padding: 2rem; }
+.order-summary-mini { background: #FBF5E9; border: 1px solid #E8D9C0; border-radius: 4px; padding: 1rem 1.2rem; margin-bottom: 1.5rem; }
+.order-summary-mini h4 { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #7A6247; margin-bottom: 8px; }
+.summary-item { display: flex; justify-content: space-between; font-size: 13px; color: #2D1F0A; padding: 4px 0; }
+.summary-total-row { display: flex; justify-content: space-between; font-weight: 500; font-size: 14px; color: #1A0F00; padding: 8px 0 0; border-top: 1px solid #E8D9C0; margin-top: 8px; }
+.form-group { margin-bottom: 1.2rem; }
+.form-label { display: block; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6247; margin-bottom: 6px; font-weight: 500; }
+.form-input { width: 100%; padding: 12px 14px; border: 1px solid #E8D9C0; border-radius: 4px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: #2D1F0A; background: #FEFCF8; outline: none; transition: border-color 0.2s; resize: vertical; }
+.form-input:focus { border-color: #C9923A; }
+.form-input.error { border-color: #B03A2E; }
+.field-error { font-size: 12px; color: #B03A2E; margin-top: 4px; display: block; }
+.place-order-btn { width: 100%; padding: 14px; background: #1A0F00; color: #F2DDB4; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; font-weight: 500; transition: background 0.2s; margin-top: 0.5rem; }
+.place-order-btn:hover:not(:disabled) { background: #C9923A; color: #1A0F00; }
+.place-order-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.payment-placeholder { border: 1px dashed #E8D9C0; border-radius: 4px; padding: 1.5rem; text-align: center; margin-top: 1.5rem; color: #7A6247; font-size: 13px; }
+.ph-icon { font-size: 2rem; margin-bottom: 8px; opacity: 0.4; }
+.payment-placeholder strong { display: block; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }

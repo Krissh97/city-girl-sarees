@@ -1,0 +1,15 @@
+.cart-empty { text-align: center; padding: 5rem 2rem; }
+.empty-icon { font-size: 4rem; margin-bottom: 1rem; opacity: 0.4; }
+.empty-title { font-size: 1.1rem; color: #2D1F0A; margin-bottom: 6px; }
+.empty-sub { font-size: 13px; color: #7A6247; }
+.shop-btn { margin-top: 1.5rem; padding: 12px 32px; background: #C9923A; color: #1A0F00; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-family: 'DM Sans', sans-serif; letter-spacing: 0.1em; }
+.cart-table { width: 100%; border-collapse: collapse; }
+.cart-table th { text-align: left; padding: 12px 16px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #7A6247; border-bottom: 2px solid #E8D9C0; font-weight: 500; }
+.cart-summary { margin-top: 2rem; display: flex; justify-content: flex-end; }
+.summary-box { background: #fff; border: 1px solid #E8D9C0; border-radius: 10px; padding: 1.5rem 2rem; min-width: 300px; }
+.summary-row { display: flex; justify-content: space-between; font-size: 14px; padding: 6px 0; color: #7A6247; }
+.summary-note { font-size: 11px; color: #C9923A; text-align: center; margin: 4px 0; }
+.summary-total { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 500; color: #1A0F00; padding: 12px 0 0; border-top: 2px solid #E8D9C0; margin-top: 8px; }
+.checkout-btn { width: 100%; margin-top: 1.2rem; padding: 14px; background: #C9923A; color: #1A0F00; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; font-family: 'DM Sans', sans-serif; transition: opacity 0.2s; }
+.checkout-btn:hover { opacity: 0.9; }
+.secure-note { text-align: center; margin-top: 10px; font-size: 11px; color: #7A6247; }

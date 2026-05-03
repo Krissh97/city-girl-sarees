@@ -1,0 +1,9 @@
+.confirm-page { text-align: center; padding: 5rem 2rem; max-width: 500px; margin: 0 auto; }
+.confirm-icon { font-size: 4rem; margin-bottom: 1rem; }
+.confirm-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: #1A0F00; margin-bottom: 1rem; }
+.confirm-msg { color: #7A6247; font-size: 15px; line-height: 1.7; }
+.confirm-id { font-size: 12px; color: #7A6247; margin-top: 12px; letter-spacing: 0.1em; }
+.wa-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 2rem; padding: 14px 32px; background: #25D366; color: white; border-radius: 4px; font-size: 14px; letter-spacing: 0.08em; cursor: pointer; border: none; font-family: 'DM Sans', sans-serif; transition: opacity 0.2s; }
+.wa-btn:hover { opacity: 0.9; }
+.back-btn { display: block; margin: 1rem auto 0; padding: 12px 28px; border: 1px solid #E8D9C0; border-radius: 4px; color: #7A6247; font-size: 13px; cursor: pointer; background: none; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+.back-btn:hover { border-color: #C9923A; color: #C9923A; }

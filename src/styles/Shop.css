@@ -1,0 +1,6 @@
+.shop-layout { display: grid; grid-template-columns: 280px 1fr; min-height: calc(100vh - 112px); }
+.shop-main { padding: 2rem; }
+.shop-topbar { margin-bottom: 1.5rem; }
+.results-count { font-size: 13px; color: #7A6247; }
+.results-count strong { color: #2D1F0A; }
+@media (max-width: 768px) { .shop-layout { grid-template-columns: 1fr; } }

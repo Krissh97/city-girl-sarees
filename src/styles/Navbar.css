@@ -1,0 +1,4 @@
+.navbar { background: #FBF5E9; border-bottom: 1px solid #E8D9C0; display: flex; padding: 0 2rem; }
+.nav-link { padding: 14px 20px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6247; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; font-weight: 500; }
+.nav-link:hover { color: #C9923A; }
+.nav-link.active { color: #C9923A; border-bottom-color: #C9923A; }

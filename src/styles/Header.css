@@ -1,0 +1,8 @@
+/* Header.css */
+.header { background: #1A0F00; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 72px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #3D2800; }
+.header-logo { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: #F2DDB4; letter-spacing: 0.12em; font-style: italic; }
+.logo-city { color: #C9923A; font-weight: 600; }
+.header-tagline { font-size: 11px; color: #7A6247; letter-spacing: 0.2em; text-transform: uppercase; margin-top: 2px; }
+.cart-btn { background: none; border: 1px solid #C9923A; color: #F2DDB4; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 13px; letter-spacing: 0.08em; display: flex; align-items: center; gap: 8px; transition: background 0.2s; }
+.cart-btn:hover { background: rgba(201,146,58,0.15); }
+.cart-badge { background: #C9923A; color: #1A0F00; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; }

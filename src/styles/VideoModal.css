@@ -1,0 +1,5 @@
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; display: flex; align-items: center; justify-content: center; }
+.modal-box { background: #1A0F00; border: 1px solid #C9923A; border-radius: 10px; padding: 1.5rem; width: 90%; max-width: 640px; }
+.modal-header { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: #F2DDB4; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
+.modal-close { background: none; border: none; color: #7A6247; font-size: 22px; cursor: pointer; padding: 0; }
+.modal-video { width: 100%; border-radius: 4px; aspect-ratio: 16/9; background: #000; }

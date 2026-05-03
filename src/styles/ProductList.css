@@ -1,0 +1,4 @@
+.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
+.no-results { text-align: center; padding: 5rem 2rem; color: #7A6247; }
+.no-results-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
+.no-results-sub { font-size: 13px; margin-top: 6px; }
