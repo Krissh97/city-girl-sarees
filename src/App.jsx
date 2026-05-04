@@ -9,6 +9,7 @@ import Shop from "./pages/Shop";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
+import AdminPanel from './pages/AdminPanel';
 import "./styles/global.css";
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/confirmation" element={<ConfirmationPage />} />
+          <Route path="/admin" element={<AdminPanel />} />
         </Routes>
       </Router>
     </CartProvider>
