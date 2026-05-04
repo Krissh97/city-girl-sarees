@@ -1,29 +1,56 @@
-/* /src/styles/global.css */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+/* src/styles/global.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap');
 
 :root {
-  --gold: #C9923A;
-  --gold-light: #F2DDB4;
-  --gold-pale: #FBF5E9;
-  --deep: #1A0F00;
-  --ink: #2D1F0A;
-  --muted: #7A6247;
-  --border: #E8D9C0;
-  --surface: #FEFCF8;
-  --white: #FFFFFF;
-  --danger: #B03A2E;
-  --success: #2E7D32;
-  --radius: 4px;
-  --radius-lg: 10px;
+  /* Core palette — deep forest + warm gold + blush */
+  --ink:        #0D0A06;
+  --deep:       #1C1208;
+  --bark:       #3D2B10;
+  --muted:      #8A7560;
+  --border:     #E2D5C0;
+  --surface:    #FAF7F2;
+  --warm-white: #FFFDF9;
+  --gold:       #B8892A;
+  --gold-light: #D4AB5A;
+  --gold-pale:  #F5E9CC;
+  --blush:      #F0E0D6;
+  --sage:       #8FA68A;
+  --danger:     #9B2335;
+  --success:    #2D6A4F;
+
+  --radius:    6px;
+  --radius-lg: 14px;
+  --radius-xl: 24px;
+
+  --shadow-sm: 0 2px 8px rgba(13,10,6,0.06);
+  --shadow-md: 0 8px 32px rgba(13,10,6,0.10);
+  --shadow-lg: 0 20px 60px rgba(13,10,6,0.15);
+
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Jost', sans-serif;
   background: var(--surface);
   color: var(--ink);
   min-height: 100vh;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
 }
 
 a { text-decoration: none; color: inherit; }
+button { font-family: 'Jost', sans-serif; }
+img { display: block; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--gold-pale); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
+
+/* Utility */
+.serif { font-family: 'Playfair Display', serif; }

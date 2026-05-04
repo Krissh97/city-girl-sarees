@@ -1,6 +1,13 @@
-.shop-layout { display: grid; grid-template-columns: 280px 1fr; min-height: calc(100vh - 112px); }
+/* src/styles/Shop.css */
+.shop-layout { display: grid; grid-template-columns: 268px 1fr; min-height: calc(100vh - 116px); }
 .shop-main { padding: 2rem; }
-.shop-topbar { margin-bottom: 1.5rem; }
-.results-count { font-size: 13px; color: #7A6247; }
-.results-count strong { color: #2D1F0A; }
+.shop-topbar { margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+.results-count { font-size: 13px; color: var(--muted); }
+.results-count strong { color: var(--ink); }
 @media (max-width: 768px) { .shop-layout { grid-template-columns: 1fr; } }
+
+/* src/styles/ProductList.css */
+/* (append to Shop.css or keep separate — same import either way) */
+.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; }
+.no-results { grid-column: 1/-1; text-align: center; padding: 5rem 2rem; color: var(--muted); }
+.no-results-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
