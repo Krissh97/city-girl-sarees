@@ -1,5 +1,5 @@
 // /src/pages/Home.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ProductList from "../components/ProductList";
 import VideoModal from "../components/VideoModal";
