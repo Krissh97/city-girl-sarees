@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ProductList from "../components/ProductList";
 import VideoModal from "../components/VideoModal";
-import { SAREES } from "../data/sarees";
+// import { SAREES } from "../data/sarees";
 import "../styles/Home.css";
 
 const FEATURES = [
@@ -18,8 +18,15 @@ export default function Home() {
   const [videoSaree, setVideoSaree] = useState(null);
 
   // Show only in-stock featured products (first 8)
-  const featured = SAREES.filter((s) => s.stock > 0).slice(0, 8);
+  // const featured = SAREES.filter((s) => s.stock > 0).slice(0, 8);
+  const [featured, setFeatured] = useState([]);
 
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/sarees?featured=true`)
+      .then(r => r.json())
+      .then(data => setFeatured(Array.isArray(data) ? data.slice(0, 8) : []))
+      .catch(() => {});
+  }, []);
   return (
     <div className="home-page">
       {/* Hero */}
