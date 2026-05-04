@@ -149,11 +149,11 @@ export default function Checkout() {
         {loading ? 'Placing Order…' : 'Place Order & Notify Seller via WhatsApp'}
       </button>
 
-      <div className="payment-placeholder">
+      {/* <div className="payment-placeholder">
         <div className="ph-icon">💳</div>
         <strong>Payment Gateway</strong>
         <p>Razorpay / Stripe integration coming soon</p>
-      </div>
+      </div> */}
     </div>
   );
 }
