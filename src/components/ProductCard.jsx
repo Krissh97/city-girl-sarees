@@ -1,39 +1,73 @@
 // src/components/ProductCard.jsx
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { COLOR_MAP } from '../data/sarees';
 import '../styles/ProductCard.css';
+
+// Star rating display (read-only)
+export function StarDisplay({ rating, count, size = 13 }) {
+  if (!rating) return null;
+  const stars = [1, 2, 3, 4, 5].map(i => {
+    const fill = Math.min(Math.max(rating - (i - 1), 0), 1);
+    return { i, fill };
+  });
+  return (
+    <div style={{ display:'flex', alignItems:'center', gap:4 }}>
+      <div style={{ display:'flex', gap:1 }}>
+        {stars.map(({ i, fill }) => (
+          <svg key={i} width={size} height={size} viewBox="0 0 20 20">
+            <defs>
+              <linearGradient id={`sg-${i}-${rating}`}>
+                <stop offset={`${fill * 100}%`} stopColor="#D4AB5A" />
+                <stop offset={`${fill * 100}%`} stopColor="#2A1E0A" />
+              </linearGradient>
+            </defs>
+            <polygon
+              points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7"
+              fill={`url(#sg-${i}-${rating})`}
+            />
+          </svg>
+        ))}
+      </div>
+      {count > 0 && (
+        <span style={{ fontSize:11, color:'#8A7560' }}>({count})</span>
+      )}
+    </div>
+  );
+}
 
 export default function ProductCard({ saree, onVideoClick }) {
   const { cart, dispatch } = useCart();
+  const navigate = useNavigate();
   const [justAdded, setJustAdded] = useState(false);
   const [imgError, setImgError]   = useState(false);
 
-  const inCart     = cart.some(c => c.id === saree.id || c.id === saree._id);
+  const sareeId    = saree._id || saree.id;
+  const inCart     = cart.some(c => c.id === sareeId);
   const outOfStock = saree.stock <= 0;
+  // Only show "Only X left" if stock is between 1 and 4
   const lowStock   = saree.stock > 0 && saree.stock < 5;
 
-  // Support both _id (from MongoDB) and id (from mock data)
-  const sareeId = saree._id || saree.id;
-
-  // First image from imageUrls array, or legacy imageUrl string
   const primaryImage = saree.imageUrls?.[0] || saree.imageUrl || '';
+  const badgeClass   = `badge badge-${saree.type?.toLowerCase() || 'other'}`;
 
-  function handleAddToCart() {
+  function handleAddToCart(e) {
+    e.stopPropagation(); // don't open detail page
     if (outOfStock) return;
     dispatch({ type: 'ADD_ITEM', id: sareeId });
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1800);
   }
 
-  const badgeClass = `badge badge-${saree.type?.toLowerCase() || 'other'}`;
+  function openDetail() {
+    navigate(`/saree/${sareeId}`);
+  }
 
   return (
-    <div className="product-card">
+    <div className="product-card" onClick={openDetail}>
 
-      {/* ── Image ───────────────────────────────────────── */}
+      {/* ── Image ─────────────────────────────────────── */}
       <div className="product-img-wrap">
-
         {primaryImage && !imgError ? (
           <img
             className="product-img"
@@ -48,44 +82,45 @@ export default function ProductCard({ saree, onVideoClick }) {
           </div>
         )}
 
-        {/* Hover gradient overlay */}
         <div className="card-overlay" />
-
-        {/* Type badge */}
         <span className={badgeClass}>{saree.type}</span>
 
-        {/* Out of stock */}
         {outOfStock && (
           <div className="oos-overlay">
             <span className="oos-label">Out of Stock</span>
           </div>
         )}
 
-        {/* Video button */}
+        {/* Video preview button */}
         {saree.videoUrl && (
           <button
             className="video-btn"
-            onClick={e => { e.stopPropagation(); onVideoClick(saree); }}
+            onClick={e => { e.stopPropagation(); onVideoClick && onVideoClick(saree); }}
             title="Watch preview"
           >
             ▶
           </button>
         )}
 
-        {/* Color dot */}
-        <div className="color-dot-wrap">
-          <span
-            className="color-dot"
-            style={{ background: COLOR_MAP[saree.color] || '#aaa' }}
-          />
-        </div>
-
+        {/* Color variants count badge */}
+        {saree.variants?.length > 0 && (
+          <div className="variants-badge">
+            +{saree.variants.length} colour{saree.variants.length > 1 ? 's' : ''}
+          </div>
+        )}
       </div>
 
-      {/* ── Info ────────────────────────────────────────── */}
+      {/* ── Info ──────────────────────────────────────── */}
       <div className="product-info">
         <div className="product-name">{saree.name}</div>
         <div className="product-meta-line">{saree.type} · {saree.color}</div>
+
+        {/* Rating stars — only show if rated */}
+        {saree.averageRating > 0 && (
+          <div style={{ marginBottom:8 }}>
+            <StarDisplay rating={saree.averageRating} count={saree.reviewCount} />
+          </div>
+        )}
 
         <div className="product-price-row">
           <span className="product-price">
@@ -98,15 +133,11 @@ export default function ProductCard({ saree, onVideoClick }) {
           )}
         </div>
 
+        {/* Only show stock warning if low — nothing shown when stock is fine */}
         <div className="product-tags">
           <span className="tag">{saree.size || '5.5m'}</span>
-          {outOfStock ? (
-            <span className="tag tag-danger">Out of stock</span>
-          ) : lowStock ? (
-            <span className="tag tag-warn">Only {saree.stock} left</span>
-          ) : (
-            <span className="tag tag-good">{saree.stock} in stock</span>
-          )}
+          {outOfStock && <span className="tag tag-danger">Out of stock</span>}
+          {lowStock   && <span className="tag tag-warn">Only {saree.stock} left</span>}
         </div>
 
         <button
@@ -117,7 +148,6 @@ export default function ProductCard({ saree, onVideoClick }) {
           {outOfStock ? 'Out of Stock' : justAdded ? '✓ Added!' : inCart ? '✓ In Cart' : 'Add to Cart'}
         </button>
       </div>
-
     </div>
   );
 }
