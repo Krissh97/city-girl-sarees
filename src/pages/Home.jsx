@@ -30,12 +30,8 @@ export default function Home() {
 
       {/* ── HERO ─────────────────────────────────────────── */}
       <section className="hero">
-        <div className="hero-eyebrow">
-          New Collection
-        </div>
-        <h1>
-          Draped in<br /><em>Timeless</em> Grace
-        </h1>
+        <div className="hero-eyebrow">New Collection</div>
+        <h1>Draped in<br /><em>Timeless</em> Grace</h1>
         <p className="hero-sub">
           Handpicked sarees from the finest looms — silk, cotton,
           pattu and more, delivered to your door.
@@ -59,13 +55,30 @@ export default function Home() {
       {/* ── ALL SAREES ───────────────────────────────────── */}
       <div className="section-header">
         <div className="section-eyebrow">Our Collection</div>
-        <h2 className="section-title">
-          Every <em>Saree</em> Tells a Story
-        </h2>
+        <h2 className="section-title">Every <em>Saree</em> Tells a Story</h2>
       </div>
       <div className="section-divider" />
 
       <div className="featured-wrapper">
+        {/* Filter bar — sits just above the saree grid */}
+        <div className="home-filter-bar">
+          <span className="home-filter-count">
+            {sarees.length} sarees
+          </span>
+          <button
+            className="home-filter-btn"
+            onClick={() => navigate('/shop')}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="4" y1="6" x2="20" y2="6"/>
+              <line x1="8" y1="12" x2="20" y2="12"/>
+              <line x1="12" y1="18" x2="20" y2="18"/>
+            </svg>
+            Filter & Search
+          </button>
+        </div>
+
         {loading ? (
           <div className="home-loading">Loading collection…</div>
         ) : (

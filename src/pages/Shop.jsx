@@ -42,8 +42,12 @@ export default function Shop() {
     return sarees.filter(s => {
       if (filters.types.length > 0 && !filters.types.includes(s.type))
         return false;
-      if (filters.colors.length > 0 && !filters.colors.includes(s.color))
-        return false;
+      if (filters.colors.length > 0) {
+        // Check primary color AND all variant colors
+        const allColors = [s.color, ...(s.variants || []).map(v => v.color)];
+        const hasMatch  = filters.colors.some(c => allColors.includes(c));
+        if (!hasMatch) return false;
+      }
       if (filters.priceMin !== '' && s.price < Number(filters.priceMin))
         return false;
       if (filters.priceMax !== '' && s.price > Number(filters.priceMax))
