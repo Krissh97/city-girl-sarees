@@ -9,6 +9,8 @@
   height: calc(100vh - 116px);
   overflow-y: auto;
   min-width: 260px;
+  z-index: 10;                        /* ← keeps sidebar above scrolling cards */
+  align-self: flex-start;             /* ← stops it stretching full grid height */
 }
 
 .filter-header {

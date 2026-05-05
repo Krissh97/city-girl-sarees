@@ -7,11 +7,14 @@ export default function Filters({ filters, onChange, onClear }) {
   const allColors = Object.keys(COLOR_MAP);
 
   function toggleChip(key, value) {
-    const current = filters[key];
-    const updated = current.includes(value)
-      ? current.filter((v) => v !== value)
-      : [...current, value];
-    onChange({ ...filters, [key]: updated });
+    const current = [...filters[key]]; // spread to new array — important
+    const idx = current.indexOf(value);
+    if (idx > -1) {
+      current.splice(idx, 1);
+    } else {
+      current.push(value);
+    }
+    onChange({ ...filters, [key]: current });
   }
 
   return (

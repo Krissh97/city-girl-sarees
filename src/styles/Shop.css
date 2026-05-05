@@ -1,5 +1,10 @@
 /* src/styles/Shop.css */
-.shop-layout { display: grid; grid-template-columns: 268px 1fr; min-height: calc(100vh - 116px); }
+.shop-layout {
+  display: grid;
+  grid-template-columns: 268px 1fr;
+  min-height: calc(100vh - 116px);
+  align-items: start;                 /* ← children don't stretch to full height */
+}
 .shop-main { padding: 2rem; }
 .shop-topbar { margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; }
 .results-count { font-size: 13px; color: var(--muted); }
