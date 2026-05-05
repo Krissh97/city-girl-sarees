@@ -2,30 +2,42 @@
 const SELLER_WHATSAPP = process.env.REACT_APP_SELLER_WHATSAPP || '919492901993';
 
 export function buildWhatsAppUrl(customer, cart, sareeData, grandTotal) {
+  const divider = '━━━━━━━━━━━━━━━━━━━━';
+
   const itemLines = cart
     .map(c => {
       const s = sareeData[c.id];
       if (!s) return null;
-      return `  • ${s.name} (${s.type}, ${s.color}) × ${c.qty} = ₹${(s.price * c.qty).toLocaleString('en-IN')}`;
+      return `   ${c.qty}x ${s.name}\n       ${s.type} · ${s.color} · ₹${(s.price * c.qty).toLocaleString('en-IN')}`;
     })
     .filter(Boolean)
-    .join('\n');
+    .join('\n\n');
 
   const message =
-`🛍️ *New Order — City Girl Sarees*
+`${divider}
+*CITY GIRL SAREES*
+*New Order Received*
+${divider}
 
-👤 *Customer:* ${customer.name}
-📞 *Phone:* ${customer.phone}
-📍 *Address:* ${customer.address}
-${customer.notes ? `📝 *Notes:* ${customer.notes}` : ''}
+*CUSTOMER DETAILS*
+Name       : ${customer.name}
+Phone    : ${customer.phone}
+Address : ${customer.address}${customer.notes ? `\nNotes     : ${customer.notes}` : ''}
 
-🧵 *Items Ordered:*
+${divider}
+
+*ITEMS ORDERED*
+
 ${itemLines}
 
-💰 *Total:* ₹${grandTotal.toLocaleString('en-IN')}
+${divider}
 
-_Sent via City Girl website_`;
+*ORDER TOTAL : ₹${grandTotal.toLocaleString('en-IN')}*
 
+${divider}
+_Sent from City Girl website_`;
+
+  const SELLER_WHATSAPP = process.env.REACT_APP_SELLER_WHATSAPP || '919876543210';
   return `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(message)}`;
 }
 
