@@ -1,14 +1,13 @@
 // /src/components/Filters.jsx
 import React from "react";
-import { SAREE_TYPES, COLOR_MAP } from "../data/sarees";
+// import { SAREE_TYPES, COLOR_MAP } from "../data/sarees";
 import "../styles/Filters.css";
 
-export default function Filters({ filters, onChange, onClear }) {
-  const allColors = Object.keys(COLOR_MAP);
+export default function Filters({ filters, onChange, onClear, availableColors = [], availableTypes = [] }) {
 
   function toggleChip(key, value) {
-    const current = [...filters[key]]; // spread to new array — important
-    const idx = current.indexOf(value);
+    const current = [...filters[key]];
+    const idx = current.findIndex(c => c.toLowerCase() === value.toLowerCase());
     if (idx > -1) {
       current.splice(idx, 1);
     } else {
@@ -29,19 +28,19 @@ export default function Filters({ filters, onChange, onClear }) {
           type="text"
           placeholder="Search sarees..."
           value={filters.search}
-          onChange={(e) => onChange({ ...filters, search: e.target.value })}
+          onChange={e => onChange({ ...filters, search: e.target.value })}
         />
       </div>
 
-      {/* Fabric Type */}
+      {/* Type — built from real data */}
       <div className="filter-section">
         <div className="filter-label">Fabric Type</div>
         <div className="filter-chips">
-          {SAREE_TYPES.map((t) => (
+          {availableTypes.map(t => (
             <span
               key={t}
-              className={`chip${filters.types.includes(t) ? " selected" : ""}`}
-              onClick={() => toggleChip("types", t)}
+              className={`chip${filters.types.some(f => f.toLowerCase() === t.toLowerCase()) ? ' selected' : ''}`}
+              onClick={() => toggleChip('types', t)}
             >
               {t}
             </span>
@@ -49,20 +48,16 @@ export default function Filters({ filters, onChange, onClear }) {
         </div>
       </div>
 
-      {/* Color */}
+      {/* Color — built from real data */}
       <div className="filter-section">
         <div className="filter-label">Color</div>
         <div className="filter-chips">
-          {allColors.map((c) => (
+          {availableColors.map(c => (
             <span
               key={c}
-              className={`chip${filters.colors.includes(c) ? " selected" : ""}`}
-              onClick={() => toggleChip("colors", c)}
+              className={`chip${filters.colors.some(f => f.toLowerCase() === c.toLowerCase()) ? ' selected' : ''}`}
+              onClick={() => toggleChip('colors', c)}
             >
-              <span
-                className="color-swatch"
-                style={{ background: COLOR_MAP[c] }}
-              />
               {c}
             </span>
           ))}
@@ -73,21 +68,13 @@ export default function Filters({ filters, onChange, onClear }) {
       <div className="filter-section">
         <div className="filter-label">Price Range (₹)</div>
         <div className="price-range">
-          <input
-            className="price-input"
-            type="number"
-            placeholder="Min"
+          <input className="price-input" type="number" placeholder="Min"
             value={filters.priceMin}
-            onChange={(e) => onChange({ ...filters, priceMin: e.target.value })}
-          />
+            onChange={e => onChange({ ...filters, priceMin: e.target.value })} />
           <span className="price-dash">–</span>
-          <input
-            className="price-input"
-            type="number"
-            placeholder="Max"
+          <input className="price-input" type="number" placeholder="Max"
             value={filters.priceMax}
-            onChange={(e) => onChange({ ...filters, priceMax: e.target.value })}
-          />
+            onChange={e => onChange({ ...filters, priceMax: e.target.value })} />
         </div>
       </div>
 
@@ -95,13 +82,11 @@ export default function Filters({ filters, onChange, onClear }) {
       <div className="filter-section">
         <div className="filter-label">Availability</div>
         <div className="toggle-group">
-          {["all", "in", "out"].map((v) => (
-            <button
-              key={v}
-              className={`toggle-btn${filters.stock === v ? " selected" : ""}`}
-              onClick={() => onChange({ ...filters, stock: v })}
-            >
-              {v === "all" ? "All" : v === "in" ? "In Stock" : "Out"}
+          {[['all','All'],['in','In Stock'],['out','Out']].map(([v, label]) => (
+            <button key={v}
+              className={`toggle-btn${filters.stock === v ? ' selected' : ''}`}
+              onClick={() => onChange({ ...filters, stock: v })}>
+              {label}
             </button>
           ))}
         </div>
@@ -111,21 +96,17 @@ export default function Filters({ filters, onChange, onClear }) {
       <div className="filter-section">
         <div className="filter-label">Quantity</div>
         <div className="toggle-group">
-          {["any", "hi", "lo"].map((v) => (
-            <button
-              key={v}
-              className={`toggle-btn${filters.qty === v ? " selected" : ""}`}
-              onClick={() => onChange({ ...filters, qty: v })}
-            >
-              {v === "any" ? "Any" : v === "hi" ? "5+" : "< 5"}
+          {[['any','Any'],['hi','5+'],['lo','< 5']].map(([v, label]) => (
+            <button key={v}
+              className={`toggle-btn${filters.qty === v ? ' selected' : ''}`}
+              onClick={() => onChange({ ...filters, qty: v })}>
+              {label}
             </button>
           ))}
         </div>
       </div>
 
-      <button className="clear-btn" onClick={onClear}>
-        ✕ Clear All Filters
-      </button>
+      <button className="clear-btn" onClick={onClear}>✕ Clear All Filters</button>
     </aside>
   );
 }

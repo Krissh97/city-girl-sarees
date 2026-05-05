@@ -20,6 +20,21 @@ export default function Shop() {
   const [loading, setLoading]       = useState(true);
   const [filters, setFilters]       = useState(DEFAULT_FILTERS);
   const [videoSaree, setVideoSaree] = useState(null);
+  // At the top, derive unique colors + types from actual sarees
+  const availableColors = useMemo(() => {
+    const set = new Set();
+    sarees.forEach(s => {
+      if (s.color) set.add(s.color);
+      (s.variants || []).forEach(v => { if (v.color) set.add(v.color); });
+    });
+    return [...set].sort();
+  }, [sarees]);
+
+  const availableTypes = useMemo(() => {
+    const set = new Set();
+    sarees.forEach(s => { if (s.type) set.add(s.type); });
+    return [...set].sort();
+  }, [sarees]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/sarees`)
@@ -40,18 +55,27 @@ export default function Shop() {
 
   const filtered = useMemo(() => {
     return sarees.filter(s => {
-      if (filters.types.length > 0 && !filters.types.includes(s.type))
-        return false;
-      if (filters.colors.length > 0) {
-        // Check primary color AND all variant colors
-        const allColors = [s.color, ...(s.variants || []).map(v => v.color)];
-        const hasMatch  = filters.colors.some(c => allColors.includes(c));
-        if (!hasMatch) return false;
+      if (filters.types.length > 0) {
+        const match = filters.types.some(
+          t => t.toLowerCase() === s.type?.toLowerCase()
+        );
+        if (!match) return false;
       }
-      if (filters.priceMin !== '' && s.price < Number(filters.priceMin))
-        return false;
-      if (filters.priceMax !== '' && s.price > Number(filters.priceMax))
-        return false;
+
+      if (filters.colors.length > 0) {
+        const allColors = [
+          s.color,
+          ...(s.variants || []).map(v => v.color)
+        ].filter(Boolean).map(c => c.toLowerCase());
+
+        const match = filters.colors.some(
+          c => allColors.includes(c.toLowerCase())
+        );
+        if (!match) return false;
+      }
+
+      if (filters.priceMin !== '' && s.price < Number(filters.priceMin)) return false;
+      if (filters.priceMax !== '' && s.price > Number(filters.priceMax)) return false;
       if (filters.stock === 'in'  && s.stock <= 0) return false;
       if (filters.stock === 'out' && s.stock  > 0) return false;
       if (filters.qty === 'hi' && s.stock <  5) return false;
@@ -81,6 +105,8 @@ export default function Shop() {
         filters={filters}
         onChange={handleFilterChange}
         onClear={handleClear}
+        availableColors={availableColors}
+        availableTypes={availableTypes}
       />
       <main className="shop-main">
         <div className="shop-topbar">
