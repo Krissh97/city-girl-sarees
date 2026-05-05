@@ -113,14 +113,15 @@ export default function ProductCard({ saree, onVideoClick }) {
       {/* ── Info ──────────────────────────────────────── */}
       <div className="product-info">
         <div className="product-name">{saree.name}</div>
-        <div className="product-meta-line">{saree.type} · {saree.color}</div>
-
-        {/* Rating stars — only show if rated */}
-        {saree.averageRating > 0 && (
-          <div style={{ marginBottom:8 }}>
-            <StarDisplay rating={saree.averageRating} count={saree.reviewCount} />
-          </div>
-        )}
+        <div className="product-meta-line">
+          {saree.type} · {saree.color}
+          {saree.averageRating > 0 && (
+            <>
+              {' · '}
+              <StarDisplay rating={saree.averageRating} count={saree.reviewCount} size={11} />
+            </>
+          )}
+        </div>
 
         <div className="product-price-row">
           <span className="product-price">

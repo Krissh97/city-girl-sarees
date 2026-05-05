@@ -158,6 +158,10 @@
   font-size: 11px;
   color: var(--muted);
   margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 .product-price-row {
