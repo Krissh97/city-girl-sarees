@@ -1,6 +1,4 @@
 // src/utils/orderService.js
-const SELLER_WHATSAPP = process.env.REACT_APP_SELLER_WHATSAPP || '919492901993';
-
 export function buildWhatsAppUrl(customer, cart, sareeData, grandTotal) {
   const divider = '━━━━━━━━━━━━━━━━━━━━';
 
@@ -37,8 +35,8 @@ ${divider}
 ${divider}
 _Sent from City Girl website_`;
 
-  const SELLER_WHATSAPP = process.env.REACT_APP_SELLER_WHATSAPP || '919876543210';
-  return `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(message)}`;
+  const number = process.env.REACT_APP_SELLER_WHATSAPP || '919876543210';
+  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }
 
 export async function submitOrder(orderPayload) {
