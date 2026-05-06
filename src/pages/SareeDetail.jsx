@@ -78,7 +78,7 @@ export default function SareeDetail() {
 
   // ── Active variant or primary ─────────────────────────────
   const active = activeVariant !== null ? saree.variants[activeVariant] : null;
-  const currentColor    = active ? active.color    : saree.color;
+  // const currentColor    = active ? active.color    : saree.color;
   const currentPrice    = active ? active.price    : saree.price;
   const currentStock    = active ? active.stock    : saree.stock;
   const currentImages   = active?.imageUrls?.length ? active.imageUrls : saree.imageUrls;
