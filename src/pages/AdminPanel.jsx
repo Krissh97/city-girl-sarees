@@ -30,7 +30,7 @@ async function apiFetch(method, path, body, token, isForm = false) {
 const BLANK = {
   sku:'', name:'', description:'', type:'Silk', color:'', colors:[],
   price:'', originalPrice:'', stock:'', size:'5.5m',
-  weight:'', blouseIncluded:false, isFeatured:false,
+  weight:'', blouseIncluded:false, isFeatured:false, blouseColor:'',
   isActive:true, tags:'', sortOrder:'0',
 };
 
@@ -120,6 +120,7 @@ export default function AdminPanel() {
       originalPrice: s.originalPrice || '', stock: s.stock,
       size: s.size || '5.5m', weight: s.weight || '',
       blouseIncluded: !!s.blouseIncluded, isFeatured: !!s.isFeatured,
+      blouseColor: s.blouseColor || '',
       isActive: s.isActive !== false,
       tags: (s.tags || []).join(', '), sortOrder: s.sortOrder ?? 0,
       colors: s.colors || [],
@@ -153,6 +154,7 @@ export default function AdminPanel() {
         sortOrder: Number(form.sortOrder),
         originalPrice: form.originalPrice !== '' ? Number(form.originalPrice) : null,
         tags: form.tags ? form.tags.split(',').map(t => t.trim()).filter(Boolean) : [],
+        colors: Array.isArray(form.colors) ? form.colors.filter(Boolean) : [],
       };
       let id;
       if (editing) {
@@ -538,8 +540,8 @@ export default function AdminPanel() {
                       {TYPES.map(t=><option key={t}>{t}</option>)}
                     </select>
                   </Field>
-                  <Field label="Primary Colour *" hint="shown on card">
-                    <input style={A.input} value={f.color} required placeholder="e.g. Red"
+                  <Field label="Primary / Body Colour *" hint="dominant colour e.g. White">
+                    <input style={A.input} value={f.color} required placeholder="e.g. White"
                       onChange={e=>set('color',e.target.value)}/>
                   </Field>
                   <Field label="Size">
@@ -548,8 +550,8 @@ export default function AdminPanel() {
                   </Field>
                 </div>
 
-                {/* ── Multi-color input ── */}
-                <Field label="Available Colours" hint="add all colors this saree comes in">
+                {/* ── Accent colours ── */}
+                <Field label="Pallu / Border / Accent Colours" hint="other colours present in this saree">
                   <div style={{ display:'flex', flexWrap:'wrap', gap:6, marginBottom:8 }}>
                     {(f.colors || []).map((c, i) => (
                       <div key={i} style={{
@@ -563,9 +565,7 @@ export default function AdminPanel() {
                           type="button"
                           onClick={() => set('colors', f.colors.filter((_, j) => j !== i))}
                           style={{ background:'none', border:'none', color:'#8A7560', cursor:'pointer', fontSize:14, lineHeight:1, padding:0 }}
-                        >
-                          ×
-                        </button>
+                        >×</button>
                       </div>
                     ))}
                   </div>
@@ -573,15 +573,14 @@ export default function AdminPanel() {
                     <input
                       style={{ ...A.input, flex:1 }}
                       value={colorInput}
-                      placeholder="Type a colour and press Add (e.g. Blue)"
+                      placeholder="e.g. Pink — press Enter or Add"
                       onChange={e => setColorInput(e.target.value)}
                       onKeyDown={e => {
                         if (e.key === 'Enter') {
                           e.preventDefault();
                           const val = colorInput.trim();
-                          if (val && !(f.colors || []).includes(val)) {
+                          if (val && !(f.colors || []).includes(val))
                             set('colors', [...(f.colors || []), val]);
-                          }
                           setColorInput('');
                         }
                       }}
@@ -591,17 +590,15 @@ export default function AdminPanel() {
                       style={{ ...A.uploadBtn, padding:'10px 16px', whiteSpace:'nowrap' }}
                       onClick={() => {
                         const val = colorInput.trim();
-                        if (val && !(f.colors || []).includes(val)) {
+                        if (val && !(f.colors || []).includes(val))
                           set('colors', [...(f.colors || []), val]);
-                        }
                         setColorInput('');
                       }}
-                    >
-                      + Add
-                    </button>
+                    >+ Add</button>
                   </div>
                   <div style={{ fontSize:11, color:'#5A4A30', marginTop:6 }}>
-                    These colours show up in the shop filter. Press Enter or click Add after each colour.
+                    Add each accent colour separately. E.g. for a White+Pink+Red saree —
+                    primary is White, add Pink and Red here.
                   </div>
                 </Field>
 
@@ -609,6 +606,10 @@ export default function AdminPanel() {
                   <Field label="Weight" hint="e.g. 400g">
                     <input style={A.input} value={f.weight} placeholder="400g"
                       onChange={e=>set('weight',e.target.value)}/>
+                  </Field>
+                  <Field label="Blouse Colour" hint="if blouse included">
+                    <input style={A.input} value={f.blouseColor} placeholder="e.g. Red"
+                      onChange={e=>set('blouseColor',e.target.value)}/>
                   </Field>
                   <Field label="Tags" hint="comma-separated">
                     <input style={A.input} value={f.tags} placeholder="bridal, festive, daily-wear"

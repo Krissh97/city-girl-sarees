@@ -228,12 +228,24 @@ export default function SareeDetail() {
           {/* Details grid */}
           <div className="detail-specs">
             {[
-              ['Color', saree.colors?.length > 0
-                ? saree.colors.join(' · ')
-                : saree.color],
+              // Body colour
+              ['Body Colour',   saree.color],
+
+              // Accent colours — only show if present
+              ...(saree.colors?.length > 0
+                ? [['Pallu / Border', saree.colors.join(', ')]]
+                : []
+              ),
+
+              // Blouse colour — only show if present
+              ...(saree.blouseColor
+                ? [['Blouse Colour', saree.blouseColor]]
+                : []
+              ),
+
+              ['Blouse',  saree.blouseIncluded ? 'Included' : 'Not included'],
               ['Size',    saree.size || '5.5m'],
               ['Weight',  saree.weight || '—'],
-              ['Blouse',  saree.blouseIncluded ? 'Included' : 'Not included'],
             ].map(([k, v]) => (
               <div className="spec-row" key={k}>
                 <span className="spec-key">{k}</span>

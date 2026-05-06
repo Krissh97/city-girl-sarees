@@ -25,11 +25,21 @@ export default function Shop() {
     const set = new Set();
     sarees.forEach(s => {
       // Primary color
-      if (s.color) set.add(s.color);
-      // All colors array
-      (s.colors || []).forEach(c => { if (c) set.add(c); });
-      // Variant colors too
-      (s.variants || []).forEach(v => { if (v.color) set.add(v.color); });
+      if (s.color) set.add(s.color.trim());
+
+      // Colors array (multi-color sarees)
+      (s.colors || []).forEach(c => {
+        if (c) set.add(c.trim());
+      });
+
+      // Variant colors — split by comma in case someone entered multiple
+      (s.variants || []).forEach(v => {
+        if (v.color) {
+          v.color.split(',').forEach(c => {
+            if (c.trim()) set.add(c.trim());
+          });
+        }
+      });
     });
     return [...set].sort();
   }, [sarees]);
@@ -70,7 +80,10 @@ export default function Shop() {
         const allColors = [
           s.color,
           ...(s.colors || []),
-          ...(s.variants || []).map(v => v.color),
+          // Split variant colors too in case they have comma-separated values
+          ...(s.variants || []).flatMap(v =>
+            v.color ? v.color.split(',').map(c => c.trim()) : []
+          ),
         ].filter(Boolean).map(c => c.toLowerCase());
 
         const match = filters.colors.some(
