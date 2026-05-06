@@ -228,7 +228,9 @@ export default function SareeDetail() {
           {/* Details grid */}
           <div className="detail-specs">
             {[
-              ['Color',   currentColor],
+              ['Color', saree.colors?.length > 0
+                ? saree.colors.join(' · ')
+                : saree.color],
               ['Size',    saree.size || '5.5m'],
               ['Weight',  saree.weight || '—'],
               ['Blouse',  saree.blouseIncluded ? 'Included' : 'Not included'],

@@ -24,7 +24,11 @@ export default function Shop() {
   const availableColors = useMemo(() => {
     const set = new Set();
     sarees.forEach(s => {
+      // Primary color
       if (s.color) set.add(s.color);
+      // All colors array
+      (s.colors || []).forEach(c => { if (c) set.add(c); });
+      // Variant colors too
       (s.variants || []).forEach(v => { if (v.color) set.add(v.color); });
     });
     return [...set].sort();
@@ -65,7 +69,8 @@ export default function Shop() {
       if (filters.colors.length > 0) {
         const allColors = [
           s.color,
-          ...(s.variants || []).map(v => v.color)
+          ...(s.colors || []),
+          ...(s.variants || []).map(v => v.color),
         ].filter(Boolean).map(c => c.toLowerCase());
 
         const match = filters.colors.some(

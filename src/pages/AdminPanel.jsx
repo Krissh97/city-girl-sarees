@@ -28,7 +28,7 @@ async function apiFetch(method, path, body, token, isForm = false) {
 }
 
 const BLANK = {
-  sku:'', name:'', description:'', type:'Silk', color:'',
+  sku:'', name:'', description:'', type:'Silk', color:'', colors:[],
   price:'', originalPrice:'', stock:'', size:'5.5m',
   weight:'', blouseIncluded:false, isFeatured:false,
   isActive:true, tags:'', sortOrder:'0',
@@ -60,6 +60,7 @@ export default function AdminPanel() {
   const [variantForm, setVariantForm]     = useState({ color:'', price:'', stock:'', sku:'' });
   const [variantSaving, setVariantSaving] = useState(false);
   const [variantImgFiles, setVariantImgFiles] = useState({});  // variantId → File[]
+  const [colorInput, setColorInput] = useState('');
   const variantImgRefs = useRef({});
 
   const notify = useCallback((msg, ok = true) => {
@@ -103,8 +104,11 @@ export default function AdminPanel() {
 
   // ── Open main saree form ──────────────────────────────────
   function openNew() {
-    setEditing(null); setForm(BLANK);
-    setImgFiles([]); setVidFile(null);
+    setEditing(null);
+    setForm(BLANK);
+    setColorInput('');
+    setImgFiles([]);
+    setVidFile(null);
     setShowForm(true);
   }
 
@@ -118,8 +122,11 @@ export default function AdminPanel() {
       blouseIncluded: !!s.blouseIncluded, isFeatured: !!s.isFeatured,
       isActive: s.isActive !== false,
       tags: (s.tags || []).join(', '), sortOrder: s.sortOrder ?? 0,
+      colors: s.colors || [],
     });
-    setImgFiles([]); setVidFile(null);
+    setImgFiles([]);
+    setVidFile(null);
+    setColorInput('');
     setShowForm(true);
   }
 
@@ -531,19 +538,81 @@ export default function AdminPanel() {
                       {TYPES.map(t=><option key={t}>{t}</option>)}
                     </select>
                   </Field>
-                  <Field label="Primary Colour *">
-                    <input style={A.input} value={f.color} required placeholder="Red, Blue…" onChange={e=>set('color',e.target.value)}/>
+                  <Field label="Primary Colour *" hint="shown on card">
+                    <input style={A.input} value={f.color} required placeholder="e.g. Red"
+                      onChange={e=>set('color',e.target.value)}/>
                   </Field>
                   <Field label="Size">
-                    <input style={A.input} value={f.size} placeholder="5.5m" onChange={e=>set('size',e.target.value)}/>
+                    <input style={A.input} value={f.size} placeholder="5.5m"
+                      onChange={e=>set('size',e.target.value)}/>
                   </Field>
                 </div>
+
+                {/* ── Multi-color input ── */}
+                <Field label="Available Colours" hint="add all colors this saree comes in">
+                  <div style={{ display:'flex', flexWrap:'wrap', gap:6, marginBottom:8 }}>
+                    {(f.colors || []).map((c, i) => (
+                      <div key={i} style={{
+                        display:'flex', alignItems:'center', gap:5,
+                        background:'#1A1208', border:'1px solid #5A4010',
+                        borderRadius:20, padding:'3px 10px 3px 12px',
+                        fontSize:12, color:'#D4AB5A'
+                      }}>
+                        {c}
+                        <button
+                          type="button"
+                          onClick={() => set('colors', f.colors.filter((_, j) => j !== i))}
+                          style={{ background:'none', border:'none', color:'#8A7560', cursor:'pointer', fontSize:14, lineHeight:1, padding:0 }}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ display:'flex', gap:8 }}>
+                    <input
+                      style={{ ...A.input, flex:1 }}
+                      value={colorInput}
+                      placeholder="Type a colour and press Add (e.g. Blue)"
+                      onChange={e => setColorInput(e.target.value)}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          const val = colorInput.trim();
+                          if (val && !(f.colors || []).includes(val)) {
+                            set('colors', [...(f.colors || []), val]);
+                          }
+                          setColorInput('');
+                        }
+                      }}
+                    />
+                    <button
+                      type="button"
+                      style={{ ...A.uploadBtn, padding:'10px 16px', whiteSpace:'nowrap' }}
+                      onClick={() => {
+                        const val = colorInput.trim();
+                        if (val && !(f.colors || []).includes(val)) {
+                          set('colors', [...(f.colors || []), val]);
+                        }
+                        setColorInput('');
+                      }}
+                    >
+                      + Add
+                    </button>
+                  </div>
+                  <div style={{ fontSize:11, color:'#5A4A30', marginTop:6 }}>
+                    These colours show up in the shop filter. Press Enter or click Add after each colour.
+                  </div>
+                </Field>
+
                 <div style={A.formRow}>
                   <Field label="Weight" hint="e.g. 400g">
-                    <input style={A.input} value={f.weight} placeholder="400g" onChange={e=>set('weight',e.target.value)}/>
+                    <input style={A.input} value={f.weight} placeholder="400g"
+                      onChange={e=>set('weight',e.target.value)}/>
                   </Field>
                   <Field label="Tags" hint="comma-separated">
-                    <input style={A.input} value={f.tags} placeholder="bridal, festive, daily-wear" onChange={e=>set('tags',e.target.value)}/>
+                    <input style={A.input} value={f.tags} placeholder="bridal, festive, daily-wear"
+                      onChange={e=>set('tags',e.target.value)}/>
                   </Field>
                 </div>
               </Section>

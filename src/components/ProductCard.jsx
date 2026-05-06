@@ -114,7 +114,12 @@ export default function ProductCard({ saree, onVideoClick }) {
       <div className="product-info">
         <div className="product-name">{saree.name}</div>
         <div className="product-meta-line">
-          {saree.type} · {saree.color}
+          {saree.type}
+          {' · '}
+          {/* Show all colors if available, otherwise just primary */}
+          {saree.colors?.length > 0
+            ? saree.colors.join(', ')
+            : saree.color}
           {saree.averageRating > 0 && (
             <>
               {' · '}
