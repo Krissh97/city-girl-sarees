@@ -22,26 +22,20 @@ export default function Shop() {
   const [videoSaree, setVideoSaree] = useState(null);
   // At the top, derive unique colors + types from actual sarees
   const availableColors = useMemo(() => {
-    const set = new Set();
+    const seen  = new Map(); // lowercase → proper case
     sarees.forEach(s => {
-      // Primary color
-      if (s.color) set.add(s.color.trim());
-
-      // Colors array (multi-color sarees)
-      (s.colors || []).forEach(c => {
-        if (c) set.add(c.trim());
-      });
-
-      // Variant colors — split by comma in case someone entered multiple
-      (s.variants || []).forEach(v => {
-        if (v.color) {
-          v.color.split(',').forEach(c => {
-            if (c.trim()) set.add(c.trim());
-          });
-        }
+      [
+        s.color,
+        ...(s.colors || []),
+        ...(s.variants || []).flatMap(v =>
+          v.color ? v.color.split(',').map(c => c.trim()) : []
+        ),
+      ].filter(Boolean).forEach(c => {
+        const key = c.toLowerCase();
+        if (!seen.has(key)) seen.set(key, c); // keep first-seen casing
       });
     });
-    return [...set].sort();
+    return [...seen.values()].sort();
   }, [sarees]);
 
   const availableTypes = useMemo(() => {

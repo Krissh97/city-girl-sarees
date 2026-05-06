@@ -68,6 +68,10 @@ export default function AdminPanel() {
     setTimeout(() => setToast(null), 3500);
   }, []);
 
+  function toTitleCase(str) {
+    return str.trim().replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+  }
+
   const loadSarees = useCallback(async () => {
     if (!token) return;
     setLoading(true);
@@ -542,7 +546,9 @@ export default function AdminPanel() {
                   </Field>
                   <Field label="Primary / Body Colour *" hint="dominant colour e.g. White">
                     <input style={A.input} value={f.color} required placeholder="e.g. White"
-                      onChange={e=>set('color',e.target.value)}/>
+                      onChange={e => set('color', e.target.value)}
+                      onBlur={e => set('color', toTitleCase(e.target.value))}
+                    />
                   </Field>
                   <Field label="Size">
                     <input style={A.input} value={f.size} placeholder="5.5m"
@@ -578,7 +584,7 @@ export default function AdminPanel() {
                       onKeyDown={e => {
                         if (e.key === 'Enter') {
                           e.preventDefault();
-                          const val = colorInput.trim();
+                          const val = toTitleCase(colorInput);
                           if (val && !(f.colors || []).includes(val))
                             set('colors', [...(f.colors || []), val]);
                           setColorInput('');
@@ -589,7 +595,7 @@ export default function AdminPanel() {
                       type="button"
                       style={{ ...A.uploadBtn, padding:'10px 16px', whiteSpace:'nowrap' }}
                       onClick={() => {
-                        const val = colorInput.trim();
+                        const val = toTitleCase(colorInput);
                         if (val && !(f.colors || []).includes(val))
                           set('colors', [...(f.colors || []), val]);
                         setColorInput('');
@@ -609,7 +615,9 @@ export default function AdminPanel() {
                   </Field>
                   <Field label="Blouse Colour" hint="if blouse included">
                     <input style={A.input} value={f.blouseColor} placeholder="e.g. Red"
-                      onChange={e=>set('blouseColor',e.target.value)}/>
+                      onChange={e => set('blouseColor', e.target.value)}
+                      onBlur={e => set('blouseColor', toTitleCase(e.target.value))}
+                    />
                   </Field>
                   <Field label="Tags" hint="comma-separated">
                     <input style={A.input} value={f.tags} placeholder="bridal, festive, daily-wear"
@@ -814,7 +822,8 @@ export default function AdminPanel() {
                   <div style={{ display:'flex', gap:12, flexWrap:'wrap', marginBottom:12 }}>
                     <Field label="Colour *">
                       <input style={A.input} value={variantForm.color} required
-                        placeholder="e.g. Blue" onChange={e=>vset('color',e.target.value)}/>
+                        placeholder="e.g. Blue" onChange={e=>vset('color',e.target.value)}
+                        onBlur={e => vset('color', toTitleCase(e.target.value))}/>
                     </Field>
                     <Field label="Price (₹) *">
                       <input style={A.input} type="number" value={variantForm.price} required min={0}
